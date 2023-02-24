@@ -1,0 +1,186 @@
+openapi: 3.1.0
+x-stoplight:
+  id: lf8hx2c7cbahj
+info:
+  title: HeyPal API
+  version: '1.0'
+  description: The HeyPal API makes it easy to add A.I. powered semantic-search & other A.I. functionality to your product & content.
+servers:
+  - url: 'https://heypal.chat/api'
+paths:
+  /documents:
+    get:
+      summary: Get Documents
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documents:
+                    $ref: '#/components/schemas/Document'
+      operationId: get-documents
+      description: Allows you to get documents in an app based on an optional set of filters.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  example: '"your-application-id"'
+                filter:
+                  type: object
+                  properties:
+                    fieldName:
+                      type: string
+                      example: fieldValue
+              required:
+                - applicationId
+        description: ''
+    parameters: []
+    post:
+      summary: Add Document
+      operationId: post-api-documents
+      responses: {}
+      description: Add one or more documents to your applications index.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+  '/documents/{id}':
+    get:
+      summary: Get Document
+      tags: []
+      responses: {}
+      operationId: get-document-by-id
+      description: Get the document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: The Document ID you're interacting with.
+    delete:
+      summary: Delete Document
+      operationId: delete-document-by-id
+      responses:
+        '200':
+          description: OK
+      description: Delete the docoument
+  /ask:
+    get:
+      summary: Search / Ask
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  searchResults:
+                    type: object
+                    required:
+                      - documents
+                    properties:
+                      documents:
+                        $ref: '#/components/schemas/Document'
+                  answer:
+                    type: string
+                required:
+                  - searchResults
+      operationId: get-ask
+      description: 'The ask endpoint is how you can preform quick look up, or generation of an answer to a user-submitted question (prompt).'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                prompt:
+                  type: string
+                  description: 'The question you want an answer for, or the action you want the assistant to take given the additonal context of relevant documents.'
+                shouldGenerateResponse:
+                  type: boolean
+                  description: Defaults to `true`. Determines whether the application just generates matches of similar documents or also tries to generate a longer-form synthesized response.
+                filter:
+                  type: object
+                  description: 'Pass in a set of fields, and their values, to only have documents that match those values return.'
+                '':
+                  type: string
+              required:
+                - applicationId
+                - prompt
+        description: |
+          `shouldGenerateResponse: false`
+          Fast semantic search, just returns relevant sections and the corresponding Documents from the index of the application
+
+          `shouldGenerateResponse: true`
+          Generates a response using the model provider (defaults to OpenAI), given the additional context of documents found.
+components:
+  schemas:
+    App:
+      title: App
+      x-stoplight:
+        id: 63y7kyes79b6j
+      type: object
+      properties:
+        id:
+          type: string
+    Document:
+      type: object
+      x-examples:
+        Example 1:
+          id: 28e9ea9c-b290-47f5-9e1f-59bf785b1642
+          title: Manage indexes
+          url: 'https://docs.pinecone.io/docs/manage-indexes'
+          content: This is the sample text
+          contentType: text
+          fields:
+            field1: field1Value
+      title: Document
+      x-stoplight:
+        id: 1f15bd385fdbb
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+        content:
+          type: string
+        contentType:
+          type: string
+        fields:
+          type: object
+          description: Metadata you want to store about this object.
+          properties:
+            fieldKey:
+              type: string
+      required:
+        - content
+  securitySchemes:
+    x-api-key:
+      name: x-api-key
+      type: apiKey
+      in: header
+      description: You can find your API key in the Settings page of your application
+security:
+  - API Key: []

@@ -1,59 +1,44 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Heypal API",
   "logo": {
     "dark": "/logo/dark.png",
     "light": "/logo/light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0069ED",
-    "light": "#4D9CFF",
-    "dark": "#0050B4"
+    "primary": "#7f5ad5",
+    "light": "#7f5ad5",
+    "dark": "#7f5ad5"
   },
   "topbarLinks": [
     {
-      "name": "Documentation",
-      "url": "https://mintlify.com/docs"
+      "name": "Sign in",
+      "url": "https://www.heypal.chat/auth/signin"
     }
   ],
   "topbarCtaButton": {
     "name": "Get Started",
-    "url": "https://github.com/mintlify/starter"
+    "url": "https://form.typeform.com/to/zCzwvbib?typeform-embed-id=6737330484482273"
   },
   "anchors": [
     {
-      "name": "API Reference",
-      "icon": "rectangle-terminal",
-      "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "https://mintlify.com"
-    },
-    {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://mintlify.com/community"
+      "name": "Try it out",
+      "icon": "comment",
+      "url": "https://www.heypal.chat/public/snyk"
     }
   ],
   "navigation": [
     {
-      "group": "Home",
-      "pages": ["introduction", "features"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Getting Started",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "authorization"
+      ]
+    },
+    {
+      "group": "Endpoints",
+      "pages": [
+        "get-documents", "add-documents", "delete-document", "get-document", "ask"
       ]
     }
   ],
@@ -61,5 +46,11 @@
     "twitter": "https://twitter.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
+  },
+  "api": {
+    "auth": {
+       "method": "key",
+       "name": "x-api-key"
+    }
+ }
 }
