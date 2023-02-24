@@ -21,14 +21,7 @@
     "name": "Get Started",
     "url": "https://form.typeform.com/to/zCzwvbib?typeform-embed-id=6737330484482273"
   },
-  "anchors": [
-    {
-      "name": "Try it out",
-      "icon": "comment",
-      "url": "https://www.heypal.chat/public/snyk"
-    }
-  ],
-  "navigation": [
+  "navigation": [    
     {
       "group": "Getting Started",
       "pages": [
@@ -36,9 +29,21 @@
       ]
     },
     {
-      "group": "Endpoints",
+      "group": "Documents",
       "pages": [
-        "get-documents", "add-documents", "delete-document", "get-document", "ask"
+        "add-documents", "get-document", "get-documents", "delete-document" 
+      ]
+    },
+    {
+      "group": "Applications",
+      "pages": [
+        "get-applications", "add-application", "delete-application", "get-application"
+      ]
+    },
+    {
+      "group": "Search / Ask",
+      "pages": [
+        "ask"
       ]
     }
   ],

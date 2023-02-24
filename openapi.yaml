@@ -22,6 +22,19 @@ paths:
                 properties:
                   documents:
                     $ref: '#/components/schemas/Document'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Document'
+                  '':
+                    type: string
       operationId: get-documents
       description: Allows you to get documents in an app based on an optional set of filters.
       requestBody:
@@ -46,7 +59,13 @@ paths:
     post:
       summary: Add Document
       operationId: post-api-documents
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
       description: Add one or more documents to your applications index.
       requestBody:
         content:
