@@ -49,7 +49,7 @@ paths:
                 filter:
                   type: object
                   properties:
-                    fieldName:
+                    metadataKey:
                       type: string
                       example: fieldValue
               required:
@@ -140,7 +140,7 @@ paths:
                   description: Defaults to `true`. Determines whether the application just generates matches of similar documents or also tries to generate a longer-form synthesized response.
                 filter:
                   type: object
-                  description: 'Pass in a set of fields, and their values, to only have documents that match those values return.'
+                  description: 'A set of metadata keys and corresponding values, to only have documents that match those criteria return.'
                 '':
                   type: string
               required:
@@ -187,11 +187,11 @@ components:
           type: string
         contentType:
           type: string
-        fields:
+        metadata:
           type: object
           description: Metadata you want to store about this object.
           properties:
-            fieldKey:
+            '{{metadataKey}}':
               type: string
       required:
         - content
