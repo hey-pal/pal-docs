@@ -152,6 +152,45 @@ paths:
 
           `shouldGenerateResponse: true`
           Generates a response using the model provider (defaults to OpenAI), given the additional context of documents found.
+  /documents/from-url:
+    post:
+      summary: Add Documents by Scraping URLs
+      operationId: post-documents-from-url
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  x-stoplight:
+                    id: 36dvhvixceu3r
+                urls:
+                  type: array
+                  x-stoplight:
+                    id: 8v8xxy4cmi58k
+                  items:
+                    x-stoplight:
+                      id: a9nxzt6nddug4
+                    type: string
+                    example: '"techmeme.com/article1"'
+                contentSelector:
+                  type: string
+                  x-stoplight:
+                    id: 0hohgbqvpvecs
+                metadata:
+                  type: string
+                  x-stoplight:
+                    id: ww4jk3ekn6xru
+              required:
+                - applicationId
+                - urls
+        description: 'Pass '
+      description: This endpoint lets you pass in one or more URLs that we will then fetch. Optionally you can specify a contentSelector that is a DOM Selector we ought to use to find the relevant text from the page.
 components:
   schemas:
     App:
