@@ -154,7 +154,7 @@ paths:
           Generates a response using the model provider (defaults to OpenAI), given the additional context of documents found.
   /documents/from-url:
     post:
-      summary: Add Documents by Scraping URLs
+      summary: Add Documents (From URLs)
       operationId: post-documents-from-url
       responses:
         '200':

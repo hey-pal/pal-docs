@@ -31,7 +31,7 @@
     {
       "group": "Documents",
       "pages": [
-        "add-documents", "get-document", "get-documents", "delete-document" 
+        "add-documents", "add-documents-from-urls", "get-document", "get-documents", "delete-document" 
       ]
     },
     {
