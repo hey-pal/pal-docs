@@ -154,7 +154,7 @@ paths:
           Generates a response using the model provider (defaults to OpenAI), given the additional context of documents found.
   /documents/from-url:
     post:
-      summary: Add Documents (From URLs)
+      summary: Add Documents by Scraping URLs
       operationId: post-documents-from-url
       responses:
         '200':
@@ -191,6 +191,149 @@ paths:
                 - urls
         description: 'Pass '
       description: This endpoint lets you pass in one or more URLs that we will then fetch. Optionally you can specify a contentSelector that is a DOM Selector we ought to use to find the relevant text from the page.
+  /search:
+    post:
+      summary: ''
+      operationId: post-search
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    $ref: '#/components/schemas/SearchResults'
+                    x-stoplight:
+                      id: g7dhoqwwhigef
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: string
+                    x-stoplight:
+                      id: zwvs68z5s6ca8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  x-stoplight:
+                    id: rm5w9upaj7zt4
+                query:
+                  type: string
+                  x-stoplight:
+                    id: hie2sb82op0go
+  /conversations:
+    post:
+      summary: ''
+      operationId: post-conversations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversationId:
+                    type: string
+                    x-stoplight:
+                      id: 8mk8adbqp34ct
+                  messages:
+                    type: array
+                    x-stoplight:
+                      id: fxv9twjlf2893
+                    items:
+                      $ref: '#/components/schemas/ConversationMessage'
+                      x-stoplight:
+                        id: jq28l9s4e6u18
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                conversationId:
+                  type:
+                    - string
+                    - 'null'
+                  x-stoplight:
+                    id: xumsumvng6by6
+                parentMessageId:
+                  x-stoplight:
+                    id: 5s7k3m2cxm343
+                  type:
+                    - string
+                    - 'null'
+                applicationId:
+                  type: string
+                  x-stoplight:
+                    id: c374rze2fpuxe
+                isStreaming:
+                  type: string
+                  x-stoplight:
+                    id: hn3rhdszv92tp
+                messageContent:
+                  type: string
+                  x-stoplight:
+                    id: 6aca4yumen9yh
+        description: 'If you''re sending in the first message of a conversation, you should send in a null conversationId and a null parentMessageId. This first call will generate a new conversation, and you will receive an id for the conversation in the response body.'
+    get:
+      summary: ''
+      operationId: get-conversations
+      responses:
+        '200':
+          description: OK
+      description: Returns the conversations for the given application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  x-stoplight:
+                    id: nrt1poothj6rr
+  '/conversations/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-conversations-id
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: applicationId
+          description: The application id the conversation belongs to.
 components:
   schemas:
     App:
@@ -234,6 +377,156 @@ components:
               type: string
       required:
         - content
+    SearchResults:
+      title: SearchResults
+      x-stoplight:
+        id: 8ru9mlevhbb5a
+      type: object
+      properties:
+        documents:
+          x-stoplight:
+            id: a6hm8esk8vbu6
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultDocuments'
+            x-stoplight:
+              id: q7awucxjehpxc
+        sections:
+          x-stoplight:
+            id: djy5szi7gar58
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultSections'
+            x-stoplight:
+              id: 8epjxbwwli6c0
+    SearchResultSection:
+      title: SearchResultSection
+      x-stoplight:
+        id: 40kaw83usyn3x
+      type: object
+      properties:
+        id:
+          type: string
+        applicationId:
+          type: string
+          x-stoplight:
+            id: 1hf86daam0v0v
+        heading:
+          type: string
+          x-stoplight:
+            id: yocswro10mueg
+        text:
+          type: string
+          x-stoplight:
+            id: k0xka7fthms8p
+        documentId:
+          type: string
+          x-stoplight:
+            id: libpxrvo8dr98
+        indexOrder:
+          type: string
+          x-stoplight:
+            id: unc8se3x8631p
+        indexId:
+          type: string
+          x-stoplight:
+            id: nmb2ghiaab592
+        indexName:
+          type: string
+          x-stoplight:
+            id: 7ut3j1bx5d29i
+        indexInfo:
+          type: string
+          x-stoplight:
+            id: s3mpr2hvaopm3
+        deletedAt:
+          type: string
+          x-stoplight:
+            id: amaxct5n3t92s
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: bbef3z6fhqekq
+        createdAt:
+          type: string
+          x-stoplight:
+            id: rc91811wlffd7
+    SearchResultDocument:
+      title: SearchResultDocument
+      x-stoplight:
+        id: tedvaboygvsz3
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          x-stoplight:
+            id: szfb41o346s8j
+        url:
+          type: string
+          x-stoplight:
+            id: twz4ofljy43vm
+        contentPreview:
+          type: string
+          x-stoplight:
+            id: smvofz5kercly
+      required:
+        - id
+        - title
+        - contentPreview
+    ConversationMessage:
+      title: ConversationMessage
+      x-stoplight:
+        id: l2qqhd6oifjdu
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+          x-stoplight:
+            id: 0325wkuxemfth
+        role:
+          type: string
+          x-stoplight:
+            id: euesva5i3tl80
+          enum:
+            - user
+            - system
+            - assistant
+        type:
+          type: string
+          x-stoplight:
+            id: bw5mg5q3el291
+        parentMessageId:
+          type:
+            - string
+            - 'null'
+          x-stoplight:
+            id: z00179zainrrd
+        searchResultSet:
+          $ref: '#/components/schemas/SearchResults'
+          x-stoplight:
+            id: 3wpyew8z68z1h
+        createdAt:
+          type: string
+          x-stoplight:
+            id: 05mk48gpinyjc
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: sov24wo1hayg8
+        deletedAt:
+          type:
+            - string
+            - 'null'
+          x-stoplight:
+            id: s0o6yevj5brge
+        conversationId:
+          type: string
+          x-stoplight:
+            id: 73fbvgg6mhsid
   securitySchemes:
     x-api-key:
       name: x-api-key
