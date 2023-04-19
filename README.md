@@ -8,6 +8,11 @@ Click on `Use this template` to copy the Mintlify starter kit. The starter kit c
 - API Reference pages
 - Use of popular components
 
+### Adding Pages
+We're right now storing the pages in the pages folder.
+
+For any operation you add to the OpenAPI you'll want to create a corresponding `.mdx` page with the needed info.
+
 ### 👩‍💻 Development
 
 Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
@@ -32,3 +37,4 @@ You can also preview changes using PRs, which generates a preview link of the do
 
 - Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
 - Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+

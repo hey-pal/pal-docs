@@ -29,19 +29,31 @@
       ]
     },
     {
-      "group": "Documents",
-      "pages": [
-        "add-documents", "add-documents-from-urls", "get-document", "get-documents", "delete-document" 
-      ]
-    },
-    {
       "group": "Applications",
       "pages": [
         "get-applications", "add-application", "delete-application", "get-application"
       ]
     },
     {
-      "group": "Search / Ask",
+      "group": "Documents",
+      "pages": [
+        "pages/documents/add-documents", "pages/documents/add-documents-from-urls", "pages/documents/get-document", "pages/documents/get-documents", "pages/documents/delete-document" 
+      ]
+    },
+    {
+      "group": "Conversations",
+      "pages": [
+        "pages/conversations/post-conversation", "pages/conversations/get-conversation-by-id", "pages/conversations/get-conversations"
+      ]
+    },
+    {
+      "group": "Search",
+      "pages": [
+        "pages/search/post-search"
+      ]
+    },
+    {
+      "group": "[OLD] Search / Ask",
       "pages": [
         "ask"
       ]

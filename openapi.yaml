@@ -57,7 +57,7 @@ paths:
         description: ''
     parameters: []
     post:
-      summary: Add Document
+      summary: Create Document
       operationId: post-api-documents
       responses:
         '200':
@@ -154,7 +154,7 @@ paths:
           Generates a response using the model provider (defaults to OpenAI), given the additional context of documents found.
   /documents/from-url:
     post:
-      summary: Add Documents by Scraping URLs
+      summary: Create Documents by Scraping URLs
       operationId: post-documents-from-url
       responses:
         '200':
@@ -193,7 +193,7 @@ paths:
       description: This endpoint lets you pass in one or more URLs that we will then fetch. Optionally you can specify a contentSelector that is a DOM Selector we ought to use to find the relevant text from the page.
   /search:
     post:
-      summary: ''
+      summary: Search
       operationId: post-search
       responses:
         '200':
@@ -238,7 +238,7 @@ paths:
                     id: hie2sb82op0go
   /conversations:
     post:
-      summary: ''
+      summary: Create or Continue Conversation
       operationId: post-conversations
       responses:
         '200':
@@ -265,7 +265,31 @@ paths:
           application/json:
             schema:
               type: object
-              properties: {}
+              properties:
+                applicationId:
+                  type: string
+                  x-stoplight:
+                    id: k09jn8mzdeo5s
+                parentMessageId:
+                  type:
+                    - string
+                    - 'null'
+                  x-stoplight:
+                    id: ggbwaa2f8zjqu
+                conversationId:
+                  type:
+                    - string
+                    - 'null'
+                  x-stoplight:
+                    id: 5qt3dwvunzl83
+                isStreaming:
+                  type: boolean
+                  x-stoplight:
+                    id: jzje08yjwc9wm
+                messageContent:
+                  type: string
+                  x-stoplight:
+                    id: oug4h0yyi0fuf
           application/xml:
             schema:
               type: object
@@ -300,7 +324,7 @@ paths:
                     id: 6aca4yumen9yh
         description: 'If you''re sending in the first message of a conversation, you should send in a null conversationId and a null parentMessageId. This first call will generate a new conversation, and you will receive an id for the conversation in the response body.'
     get:
-      summary: ''
+      summary: Get Conversations
       operationId: get-conversations
       responses:
         '200':
@@ -324,7 +348,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: Get Conversation by Id
       tags: []
       responses: {}
       operationId: get-conversations-id
@@ -388,7 +412,7 @@ components:
             id: a6hm8esk8vbu6
           type: array
           items:
-            $ref: '#/components/schemas/SearchResultDocuments'
+            $ref: '#/components/schemas/SearchResultDocument'
             x-stoplight:
               id: q7awucxjehpxc
         sections:
@@ -396,7 +420,7 @@ components:
             id: djy5szi7gar58
           type: array
           items:
-            $ref: '#/components/schemas/SearchResultSections'
+            $ref: '#/components/schemas/SearchResultSection'
             x-stoplight:
               id: 8epjxbwwli6c0
     SearchResultSection:
