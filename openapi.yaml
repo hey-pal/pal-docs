@@ -358,6 +358,42 @@ paths:
           in: query
           name: applicationId
           description: The application id the conversation belongs to.
+  '/messages/{id}/feedback':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: The message ID the feedback belongs to.
+    post:
+      summary: Create Message Feedback
+      operationId: post-feedback-by-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationMessage'
+      description: Adds feedback to a message.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  description: A numeric rating. 0 is the worst possible and 1 is the best possible.
+                  type: number
+                  min: 0
+                  max: 1
+                content:
+                  type: object
+                  properties:
+                    text:
+                      description: Textual feedback. May be empty.
+                      type: string
 components:
   schemas:
     App:
