@@ -6,7 +6,7 @@ info:
   version: '1.0'
   description: The HeyPal API makes it easy to add A.I. powered semantic-search & other A.I. functionality to your product & content.
 servers:
-  - url: 'https://heypal.chat/api'
+  - url: 'https://api.pal.ai/v1'
 paths:
   /documents:
     get:
@@ -324,22 +324,27 @@ paths:
                     id: 6aca4yumen9yh
         description: 'If you''re sending in the first message of a conversation, you should send in a null conversationId and a null parentMessageId. This first call will generate a new conversation, and you will receive an id for the conversation in the response body.'
     get:
+      parameters:
+        - schema:
+            type: string
+          name: applicationId
+          in: query
+          required: true
       summary: Get Conversations
       operationId: get-conversations
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Conversation'
       description: Returns the conversations for the given application
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                applicationId:
-                  type: string
-                  x-stoplight:
-                    id: nrt1poothj6rr
   '/conversations/{id}':
     parameters:
       - schema:
@@ -350,14 +355,24 @@ paths:
     get:
       summary: Get Conversation by Id
       tags: []
-      responses: {}
       operationId: get-conversations-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation:
+                    $ref: '#/components/schemas/Conversation'
       parameters:
         - schema:
             type: string
           in: query
           name: applicationId
           description: The application id the conversation belongs to.
+          required: true
   '/messages/{id}/feedback':
     parameters:
       - schema:
@@ -376,6 +391,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConversationMessage'
+        '422':
+          description: Message already has feedback
       description: Adds feedback to a message.
       requestBody:
         content:
@@ -384,10 +401,7 @@ paths:
               type: object
               properties:
                 rating:
-                  description: A numeric rating. 0 is the worst possible and 1 is the best possible.
-                  type: number
-                  min: 0
-                  max: 1
+                  $ref: "#/components/schemas/Rating"
                 content:
                   type: object
                   properties:
@@ -535,6 +549,24 @@ components:
         - id
         - title
         - contentPreview
+    Conversation:
+      title: Conversation
+      type: object
+      properties:
+        id:
+          type: string
+        applicationId:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        deletedAt:
+          type: string
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationMessage'
     ConversationMessage:
       title: ConversationMessage
       x-stoplight:
@@ -587,6 +619,15 @@ components:
           type: string
           x-stoplight:
             id: 73fbvgg6mhsid
+        feedback:
+          $ref: "#/components/schemas/Rating"
+    Rating:
+      title: Rating
+      type: string
+      enum:
+        - thumbsUp
+        - thumbsDown
+
   securitySchemes:
     x-api-key:
       name: x-api-key
