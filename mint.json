@@ -53,6 +53,12 @@
       ]
     },
     {
+      "group": "Messages",
+      "pages": [
+        "pages/messages/post-feedback-by-id"
+      ]
+    },
+    {
       "group": "[OLD] Search / Ask",
       "pages": [
         "ask"

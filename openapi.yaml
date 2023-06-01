@@ -6,7 +6,7 @@ info:
   version: '1.0'
   description: The HeyPal API makes it easy to add A.I. powered semantic-search & other A.I. functionality to your product & content.
 servers:
-  - url: 'https://heypal.chat/api'
+  - url: 'https://api.pal.ai/v1'
 paths:
   /documents:
     get:
@@ -329,17 +329,28 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    x-stoplight:
+                      id: y1c2mphz4etrs
+                    items:
+                      $ref: '#/components/schemas/Conversation'
+                      x-stoplight:
+                        id: olqpwykka9we1
       description: Returns the conversations for the given application
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                applicationId:
-                  type: string
-                  x-stoplight:
-                    id: nrt1poothj6rr
+        content: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: applicationId
+          required: true
   '/conversations/{id}':
     parameters:
       - schema:
@@ -350,7 +361,18 @@ paths:
     get:
       summary: Get Conversation by Id
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation:
+                    $ref: '#/components/schemas/Conversation'
+                    x-stoplight:
+                      id: ffzt4av03gt9c
       operationId: get-conversations-id
       parameters:
         - schema:
@@ -358,6 +380,34 @@ paths:
           in: query
           name: applicationId
           description: The application id the conversation belongs to.
+          required: true
+  '/messages/{id}/feedback':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: The message ID the feedback belongs to.
+    post:
+      summary: Create Message Feedback
+      operationId: post-messages-id-feedback
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationMessage'
+        '422':
+          description: Message already has feedback
+      description: Adds feedback to a message.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageFeedback'
+        description: ''
 components:
   schemas:
     App:
@@ -551,6 +601,79 @@ components:
           type: string
           x-stoplight:
             id: 73fbvgg6mhsid
+        feedback:
+          $ref: '#/components/schemas/MessageFeedback'
+          x-stoplight:
+            id: tzhy6jped1zuj
+        '':
+          type: string
+          x-stoplight:
+            id: 4d3ehxm7xkhho
+    Conversation:
+      title: Conversation
+      x-stoplight:
+        id: dnodvcybaemy4
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: m528e7v83k94a
+        applicationId:
+          type: string
+          x-stoplight:
+            id: gc9aylmtwqzuk
+        createdAt:
+          type: string
+          x-stoplight:
+            id: obbsbs1gr1ois
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: o4n5rtao5xc1y
+        deletedAt:
+          type: string
+          x-stoplight:
+            id: i2yjgcgoh4php
+        messages:
+          type: array
+          x-stoplight:
+            id: gfk7ipfopo4k3
+          items:
+            $ref: '#/components/schemas/ConversationMessage'
+            x-stoplight:
+              id: sj3z35z81beop
+    MessageFeedback:
+      title: MessageFeedback
+      x-stoplight:
+        id: 2gbm38i8m4l54
+      type: object
+      enum:
+        - thumbsUp
+        - thumbsDown
+      properties:
+        rating:
+          type: string
+          x-stoplight:
+            id: 0jwprr47l1ni0
+          enum:
+            - thumbsUp
+            - thumbsDown
+        content:
+          type: object
+          x-stoplight:
+            id: setrdq09uj9s9
+          properties:
+            text:
+              type: string
+              x-stoplight:
+                id: gbsjuy09ewr0y
+              description: Textual feedback. May be empty.
+          required:
+            - text
+      required:
+        - rating
+      x-internal: false
   securitySchemes:
     x-api-key:
       name: x-api-key
