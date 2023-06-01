@@ -324,12 +324,6 @@ paths:
                     id: 6aca4yumen9yh
         description: 'If you''re sending in the first message of a conversation, you should send in a null conversationId and a null parentMessageId. This first call will generate a new conversation, and you will receive an id for the conversation in the response body.'
     get:
-      parameters:
-        - schema:
-            type: string
-          name: applicationId
-          in: query
-          required: true
       summary: Get Conversations
       operationId: get-conversations
       responses:
@@ -342,9 +336,21 @@ paths:
                 properties:
                   conversations:
                     type: array
+                    x-stoplight:
+                      id: y1c2mphz4etrs
                     items:
                       $ref: '#/components/schemas/Conversation'
+                      x-stoplight:
+                        id: olqpwykka9we1
       description: Returns the conversations for the given application
+      requestBody:
+        content: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: applicationId
+          required: true
   '/conversations/{id}':
     parameters:
       - schema:
@@ -355,7 +361,6 @@ paths:
     get:
       summary: Get Conversation by Id
       tags: []
-      operationId: get-conversations-id
       responses:
         '200':
           description: OK
@@ -366,6 +371,9 @@ paths:
                 properties:
                   conversation:
                     $ref: '#/components/schemas/Conversation'
+                    x-stoplight:
+                      id: ffzt4av03gt9c
+      operationId: get-conversations-id
       parameters:
         - schema:
             type: string
@@ -383,7 +391,7 @@ paths:
         description: The message ID the feedback belongs to.
     post:
       summary: Create Message Feedback
-      operationId: post-feedback-by-id
+      operationId: post-messages-id-feedback
       responses:
         '200':
           description: OK
@@ -398,16 +406,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                rating:
-                  $ref: "#/components/schemas/Rating"
-                content:
-                  type: object
-                  properties:
-                    text:
-                      description: Textual feedback. May be empty.
-                      type: string
+              $ref: '#/components/schemas/MessageFeedback'
+        description: ''
 components:
   schemas:
     App:
@@ -549,24 +549,6 @@ components:
         - id
         - title
         - contentPreview
-    Conversation:
-      title: Conversation
-      type: object
-      properties:
-        id:
-          type: string
-        applicationId:
-          type: string
-        createdAt:
-          type: string
-        updatedAt:
-          type: string
-        deletedAt:
-          type: string
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversationMessage'
     ConversationMessage:
       title: ConversationMessage
       x-stoplight:
@@ -620,14 +602,78 @@ components:
           x-stoplight:
             id: 73fbvgg6mhsid
         feedback:
-          $ref: "#/components/schemas/Rating"
-    Rating:
-      title: Rating
-      type: string
+          $ref: '#/components/schemas/MessageFeedback'
+          x-stoplight:
+            id: tzhy6jped1zuj
+        '':
+          type: string
+          x-stoplight:
+            id: 4d3ehxm7xkhho
+    Conversation:
+      title: Conversation
+      x-stoplight:
+        id: dnodvcybaemy4
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: m528e7v83k94a
+        applicationId:
+          type: string
+          x-stoplight:
+            id: gc9aylmtwqzuk
+        createdAt:
+          type: string
+          x-stoplight:
+            id: obbsbs1gr1ois
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: o4n5rtao5xc1y
+        deletedAt:
+          type: string
+          x-stoplight:
+            id: i2yjgcgoh4php
+        messages:
+          type: array
+          x-stoplight:
+            id: gfk7ipfopo4k3
+          items:
+            $ref: '#/components/schemas/ConversationMessage'
+            x-stoplight:
+              id: sj3z35z81beop
+    MessageFeedback:
+      title: MessageFeedback
+      x-stoplight:
+        id: 2gbm38i8m4l54
+      type: object
       enum:
         - thumbsUp
         - thumbsDown
-
+      properties:
+        rating:
+          type: string
+          x-stoplight:
+            id: 0jwprr47l1ni0
+          enum:
+            - thumbsUp
+            - thumbsDown
+        content:
+          type: object
+          x-stoplight:
+            id: setrdq09uj9s9
+          properties:
+            text:
+              type: string
+              x-stoplight:
+                id: gbsjuy09ewr0y
+              description: Textual feedback. May be empty.
+          required:
+            - text
+      required:
+        - rating
+      x-internal: false
   securitySchemes:
     x-api-key:
       name: x-api-key
