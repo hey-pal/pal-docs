@@ -55,7 +55,7 @@
     {
       "group": "Messages",
       "pages": [
-        "pages/messages/post-feedback-by-id"
+        "pages/messages/post-messages-id-feedback"
       ]
     },
     {
