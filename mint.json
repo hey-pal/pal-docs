@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Heypal API",
+  "name": "Pal.ai API",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -13,13 +13,13 @@
   },
   "topbarLinks": [
     {
-      "name": "Sign in",
-      "url": "https://www.heypal.chat/auth/signin"
+      "name": "pal.ai ->",
+      "url": "https://www.pal.ai/auth/signin"
     }
   ],
   "topbarCtaButton": {
     "name": "Get Started",
-    "url": "https://form.typeform.com/to/zCzwvbib?typeform-embed-id=6737330484482273"
+    "url": "pal.ai"
   },
   "navigation": [    
     {
