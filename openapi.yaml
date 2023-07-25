@@ -260,6 +260,54 @@ paths:
                       $ref: '#/components/schemas/ConversationMessage'
                       x-stoplight:
                         id: jq28l9s4e6u18
+                  contact:
+                    type: object
+                    x-stoplight:
+                      id: nj8egw5mr5uci
+                    properties:
+                      id:
+                        type: string
+                        x-stoplight:
+                          id: 3imwbtc71eajr
+                      externalId:
+                        type:
+                          - string
+                          - 'null'
+                        x-stoplight:
+                          id: wcuig73ao5ass
+                      email:
+                        type:
+                          - string
+                          - 'null'
+                        x-stoplight:
+                          id: qtfloczssckup
+                      name:
+                        type:
+                          - string
+                          - 'null'
+                        x-stoplight:
+                          id: 8533l08jkwpfj
+                      organization:
+                        type:
+                          - object
+                          - 'null'
+                        x-stoplight:
+                          id: h9qvq4ejzluea
+                        properties:
+                          id:
+                            type: string
+                            x-stoplight:
+                              id: r6rpvf8brkzko
+                          name:
+                            type:
+                              - string
+                              - 'null'
+                            x-stoplight:
+                              id: lrt4dbdjm1aur
+                        required:
+                          - id
+                    required:
+                      - id
       requestBody:
         content:
           application/json:
@@ -290,6 +338,51 @@ paths:
                   type: string
                   x-stoplight:
                     id: oug4h0yyi0fuf
+                contact:
+                  type: object
+                  x-stoplight:
+                    id: cy0574ui3sze0
+                  description: At least one of externalId or email must be provided.
+                  properties:
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: w1e0a7fqd0cmz
+                      description: Optional.
+                    externalId:
+                      type: string
+                      x-stoplight:
+                        id: 6xjd6gks6xzp2
+                    email:
+                      type: string
+                      x-stoplight:
+                        id: 03ffe7vfsy85n
+                organization:
+                  type: object
+                  x-stoplight:
+                    id: ufc2fpi2tc5rf
+                  properties:
+                    externalId:
+                      type: string
+                      x-stoplight:
+                        id: o76xzzu8of74d
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: ycww5dyoyvyav
+                      description: |
+                        Optional.
+                  required:
+                    - externalId
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: is38sm7xbhqz6
+                  description: |-
+                    Any key-value pair is allowed.
+
+                    Some keys are recognized by Pal and displayed separately in the UI.
+                    For now, the only recognized key is `sourceUrl`, which Pal expects to be a URL string.
           application/xml:
             schema:
               type: object
